@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <Label>Debtors</Label>
-            <ListBox ItemsSource="{Binding Path=Accounts.Debtors}" 
+            <ListBox ItemsSource="{Binding Path=Debtors}" 
                      SelectedItem="{Binding Path=CurrentDebtor}"
                      IsSynchronizedWithCurrentItem="True"
                      DisplayMemberPath="Information" 
@@ -45,6 +45,6 @@
             </WrapPanel>
         </StackPanel>
         <Button Grid.Column="1" Height="23" Margin="10,20,10,10" VerticalAlignment="Top" HorizontalAlignment="Left"
-                Width="75" Name="BtnAddDeb" Command="{Binding OpenAddDebterCommand}">Add Debtor</Button>
+                Width="75" Name="BtnAddDeb" Command="{Binding OpenAddDebtorCommand}">Add Debtor</Button>
     </Grid>
 </Window>

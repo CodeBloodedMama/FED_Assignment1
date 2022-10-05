@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace SWD_GUI_assignment.Model
 {
+    // Each debtor has an account. Balance list shows all transactions (debts taken or paid)
+    // AccountModel models this data
     public class AccountModel
     {
         ObservableCollection<Tuple<DateTime,double>> _balanceList = new ObservableCollection<Tuple<DateTime, double>>();
-
-        
 
         public AccountModel(string name, double balance = 0)
         {

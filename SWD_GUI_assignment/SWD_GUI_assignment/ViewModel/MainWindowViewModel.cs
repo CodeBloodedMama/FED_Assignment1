@@ -12,38 +12,62 @@ using SWD_GUI_assignment.Model;
 
 namespace SWD_GUI_assignment.ViewModel
 {
+
 	public class MainWindowViewModel: INotifyPropertyChanged
 	{
-        public AccountCollection accounts = new AccountCollection();
-
-
-        public MainWindowViewModel()
+        # region Properties
+        private ObservableCollection<AccountModel> _debtors = new ObservableCollection<AccountModel>();
+        
+        public ObservableCollection<AccountModel> Debtors
         {
-         CurrentDebtor = accounts.Debtors[0];
+            get
+            {
+                return _debtors;
+            }
         }
 
-       public AccountCollection Accounts
-       {
-           get { return accounts; }
-       }
-
-       
-
-        AccountModel currentDebtor = null;
+        private AccountModel _currentDebtor = null;
         public AccountModel CurrentDebtor
         {
-            get { return currentDebtor; }
+            get { return _currentDebtor; }
             set
             {
-                if (currentDebtor != value)
+                if (_currentDebtor != value)
                 {
-                    currentDebtor = value;
+                    _currentDebtor = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
-        // On Proberty Changed
+        #endregion
+        private void InitializeDefaultData()
+        {
+            _debtors = new ObservableCollection<AccountModel>();
+            _debtors.Add(new AccountModel("Rita Binzer", 400));
+            _debtors.Add(new AccountModel("Susan Binzer", -200));
+            CurrentDebtor = Debtors[0];
+        }
+        private void AddNewDebtor(AccountModel acc)
+        {
+            _debtors.Add(acc);
+        }
+
+        // Callback for AddDebtorViewModel add event
+        public void AddEventCallback(object sender, EventArgs args)
+        {
+            AddDebtorViewModel.AddEventArgs arguments = args as AddDebtorViewModel.AddEventArgs;
+            AccountModel model = arguments.ModelToAdd;
+            AddNewDebtor(model);
+        }
+        
+        public MainWindowViewModel()
+        {
+            InitializeDefaultData();
+        }
+
+
+        // On Property Changed
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -52,14 +76,18 @@ namespace SWD_GUI_assignment.ViewModel
 
         //Commands
 
-        private ICommand _OpenAddDebterCommand;
+        // Technically making new views via ViewModel does NOT adhere to MVVM architecture
+        // Prefered solution would be converting app to PrismApplication and
+        // using dialogService Dependency Injection
+        // Not implemented due to too much refactoring for too little gain.
+        private ICommand _openAddDebtorCommand;
 
-        public ICommand OpenAddDebterCommand
+        public ICommand OpenAddDebtorCommand
         {
             get
             {
-                return _OpenAddDebterCommand ?? (_OpenAddDebterCommand = new RelayCommand(()=> {
-                    var vm = new AddDebtorViewModel(ref accounts);
+                return _openAddDebtorCommand ?? (_openAddDebtorCommand = new RelayCommand(()=> {
+                    var vm = new AddDebtorViewModel(ref _debtors, AddEventCallback);
                     
                     var addDebtorWin = new AddDebtor()
                         {
@@ -71,14 +99,14 @@ namespace SWD_GUI_assignment.ViewModel
             }
         }
 
-        private ICommand _OpenOverviewCommand;
+        private ICommand _openOverviewCommand;
         public ICommand OpenOverviewCommand
         {
             get
             {
-                return _OpenOverviewCommand ?? (_OpenOverviewCommand = new RelayCommand(()=>
+                return _openOverviewCommand ?? (_openOverviewCommand = new RelayCommand(()=>
                 {
-                    var vm = new DebtorOverviewViewModel(ref currentDebtor);
+                    var vm = new DebtorOverviewViewModel(ref _currentDebtor);
 
                     DebtorOverview overViewWin = new DebtorOverview(CurrentDebtor)
                         {
