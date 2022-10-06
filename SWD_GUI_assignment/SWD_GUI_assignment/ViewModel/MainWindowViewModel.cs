@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net.NetworkInformation;
+
+using System.Text.Json;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using SWD_GUI_assignment.Model;
+using Microsoft.Win32;
 
 namespace SWD_GUI_assignment.ViewModel
 {
@@ -48,17 +53,13 @@ namespace SWD_GUI_assignment.ViewModel
             _debtors.Add(new AccountModel("Susan Binzer", -200));
             CurrentDebtor = Debtors[0];
         }
-        private void AddNewDebtor(AccountModel acc)
-        {
-            _debtors.Add(acc);
-        }
-
+    
         // Callback for AddDebtorViewModel add event
         public void AddEventCallback(object sender, EventArgs args)
         {
             AddDebtorViewModel.AddEventArgs arguments = args as AddDebtorViewModel.AddEventArgs;
             AccountModel model = arguments.ModelToAdd;
-            AddNewDebtor(model);
+            _debtors.Add(model);
         }
         
         public MainWindowViewModel()
@@ -116,6 +117,23 @@ namespace SWD_GUI_assignment.ViewModel
                    
                 }));
             }
+        }
+
+        // Saving and loading functionality
+        public void OnSave()
+        {
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "JSON bro|*.json";
+            sfd.Title = "Save yer DebtBook";
+            sfd.ShowDialog();
+            if (sfd.FileName != "")
+            {
+                string debtBookToSave = new string("");
+                debtBookToSave += JsonSerializer.Serialize(Agents);
+                File.WriteAllText(sfd.FileName, agentsToJson);
+            }
+
         }
 
     }

@@ -56,3 +56,5 @@ C:\Users\nastr\Downloads\HandIn_1_thedebtbook\SWD_GUI_assignment\SWD_GUI_assignm
 C:\Users\nastr\Downloads\HandIn_1_thedebtbook\SWD_GUI_assignment\SWD_GUI_assignment\obj\Debug\The Debt Book.csproj.CopyComplete
 C:\Users\nastr\Downloads\HandIn_1_thedebtbook\SWD_GUI_assignment\SWD_GUI_assignment\obj\Debug\SWD_GUI_assignment.exe
 C:\Users\nastr\Downloads\HandIn_1_thedebtbook\SWD_GUI_assignment\SWD_GUI_assignment\obj\Debug\SWD_GUI_assignment.pdb
+C:\AuProjects\Semester 4\FrontEnd\HandIn_1_thedebtbook\SWD_GUI_assignment\SWD_GUI_assignment\obj\Debug\SWD_GUI_assignment.exe
+C:\AuProjects\Semester 4\FrontEnd\HandIn_1_thedebtbook\SWD_GUI_assignment\SWD_GUI_assignment\obj\Debug\SWD_GUI_assignment.pdb
