@@ -1,0 +1,25 @@
+﻿<Application x:Class="WpfApp1.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WpfApp1"
+             StartupUri="View/MainWindow.xaml">
+    <Application.Resources>
+        <!-- Need to set a color at startup - this is one way to do it-->
+        <LinearGradientBrush x:Key="GradientBrushGreen" Opacity="0.67" StartPoint="0.1,0.1" EndPoint="0.4, 0.9">
+            <GradientStop Color="ForestGreen" Offset="0.0"/>
+            <GradientStop Color="LightGreen"  Offset="0.6"/>
+            <GradientStop Color="PaleGreen" Offset="1.1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="GradientBrushChromium" x:Name="defaultBrush" StartPoint="0,0" EndPoint="0.8, 0.8">
+            <GradientStop Color="Gainsboro" Offset="0.0"/>
+            <GradientStop Color="AliceBlue" Offset="0.6"/>
+            <GradientStop Color="Gainsboro"  Offset="1.1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="GradientBrushNavy" Opacity="0.75" StartPoint="0,0" EndPoint="0.9, 0.9">
+            <GradientStop Color="DeepSkyBlue" Offset="0.0"/>
+            <GradientStop Color="AliceBlue" Offset="0.6"/>
+            <GradientStop Color="CornflowerBlue"  Offset="1.1"/>
+        </LinearGradientBrush>
+
+    </Application.Resources>
+</Application>
