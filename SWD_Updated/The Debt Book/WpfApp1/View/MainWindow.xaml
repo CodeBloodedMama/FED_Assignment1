@@ -10,22 +10,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="400"
         prims:ViewModelLocator.AutoWireViewModel="True"
-        Window.MouseEnter="MainWindow_OnGotFocus">
+        Window.MouseEnter="MainWindow_OnGotFocus" Loaded="OnLoaded">
 
 
     <!--Resources go here-->
     <Window.Resources>
-        <LinearGradientBrush x:Key="GradientBrushGreen" StartPoint="0,0" EndPoint="0.8, 0.8">
-            <GradientStop Color="DarkSlateGray" Offset="0.0"/>
-            <GradientStop Color="ForestGreen" Offset="0.4"/>
-            <GradientStop Color="LightGreen"  Offset="8.0"/>
-            <GradientStop Color="PaleGreen"/>
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="GradientBrushChromium" StartPoint="0,0" EndPoint="0.8, 0.8">
-            <GradientStop Color="Gainsboro" Offset="0.0"/>
-            <GradientStop Color="AliceBlue" Offset="0.6"/>
-            <GradientStop Color="Gainsboro"  Offset="1.1"/>
-        </LinearGradientBrush>
 
         <!-- Style definitions -->
         <Style TargetType="Label" x:Key="MainLabel">
@@ -64,15 +53,16 @@
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Palatino Linotype"></Setter>
         </Style>
+
     </Window.Resources>
 
-    <Grid Background="{StaticResource GradientBrushChromium}">
+    <Grid Background="{Binding Path=BackgroundBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
-            <ColumnDefinition Width="0.6*" />
         </Grid.ColumnDefinitions>
-        <DockPanel Height="auto" HorizontalAlignment="Left" VerticalAlignment="Top">
+        
+        <DockPanel Grid.Column="0"  Grid.ColumnSpan="2" Height="auto" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="_Save" Command="{Binding Path=CommandSave}"/>
@@ -80,15 +70,27 @@
                     <MenuItem Header="_Load from file" Command="{Binding Path=CommandLoad}"/>
                     <MenuItem Header="_Exit" Command="{Binding Path=CommandExitApp}"/>
                 </MenuItem>
+                <MenuItem Header="_Color">
+                    <MenuItem Header ="_Chromium" Command="{Binding Path=CommandChangeBackgroundColor}"
+                              CommandParameter="{StaticResource GradientBrushChromium}"></MenuItem>
+                    <MenuItem Header ="_Forest" Command="{Binding Path=CommandChangeBackgroundColor}"
+                              CommandParameter="{StaticResource GradientBrushGreen}"/>
+                    <MenuItem Header ="_Navy" Command="{Binding Path=CommandChangeBackgroundColor}"
+                              CommandParameter="{StaticResource GradientBrushNavy}"/>
+                </MenuItem>
             </Menu>
         </DockPanel>
+        
         <StackPanel Grid.ColumnSpan="2">
+
+            <Separator BorderThickness="1" Margin="0, 5"></Separator>
             <Label Style="{StaticResource TitleLabel}" HorizontalAlignment="Center" Grid.ColumnSpan="2" FontWeight="DemiBold" Margin =" 0, 10">List of Debtors</Label>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Name" Width="140"></Label>
                 <Label Content="Balance"></Label>
             </StackPanel>
             <ListBox
+                BorderThickness="2"
                 ItemsSource="{Binding Path=Debtors}"
                 SelectedItem="{Binding Path=CurrentDebtor}"
                 IsSynchronizedWithCurrentItem="True"
@@ -99,7 +101,7 @@
                      Works, but only if you click on the text!??? wtf wpf-->
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="5">
                             <TextBlock Width="150" Text="{Binding Path=Name}">
                                 <TextBlock.InputBindings>
                                     <MouseBinding 
@@ -121,34 +123,38 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
+            <Separator Height="1" BorderThickness="0"/>
 
             <WrapPanel VerticalAlignment="Center">
                 <Button Background="Cornsilk" Height="30" Margin="10,15" 
                     VerticalAlignment="Top" HorizontalAlignment="Center"
-                    Name="btnBack"  Width="75"
+                    Name="btnBack"  Width="70"
                     Click="BtnBack_OnClick">
                     <Image Source="/Resources/Images/ArrowLeft_001.png"/>
                 </Button>
 
-                <Button Height="40" Width="80" Margin="15,10,15,10" 
+                <Button Height="30" Width="70" Margin="10,15,10,15" 
                     VerticalAlignment="Top" HorizontalAlignment="Center"
                     Name="btnOverView" 
                     Command="{Binding OpenOverviewCommand}"
-                    >Overview
-            </Button>
-                <Button Background="Cornsilk" Margin="0, 15" Height="30" 
+                    >Overview</Button>
+                <Button Background="Cornsilk" Margin="10, 15" Height="30" 
                         VerticalAlignment="Top" HorizontalAlignment="Center"
-                        Name="btnForward"  Width="80"
+                        Name="btnForward"  Width="70"
                         Click="BtnForward_OnClick">
                 <Image Source="/Resources/Images/ArrowRight_001.png"/>
             </Button>
-            
+                <Button Height="30" Margin="10,15,10,10" VerticalAlignment="Top" HorizontalAlignment="Center"
+                        Width="65" Name="BtnAddDeb" Command="{Binding OpenAddDebtorCommand}">
+                    <Image Source="/Resources/Images/Add-002.png"></Image>
+                    <Button.Background>
+                        <SolidColorBrush Color="Moccasin" Opacity="0.9"></SolidColorBrush>
+                    </Button.Background>
+                </Button>
             </WrapPanel>
         </StackPanel>
-        <Button Grid.Column="2" Height="23" Background="LightGoldenrodYellow" Margin="10,100,10,10" VerticalAlignment="Top" HorizontalAlignment="Center"
-                Width="50" Name="BtnAddDeb" Command="{Binding OpenAddDebtorCommand}">
-            <Image Source="/Resources/Images/Add-002.png"></Image>
-        </Button>
+       
+           
+       
     </Grid>
 </Window>

@@ -9,8 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Net.Mime;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using SWD_GUI_assignment.Model;
 using Microsoft.Win32;
@@ -20,10 +22,24 @@ namespace SWD_GUI_assignment.ViewModel
 
 	public class MainWindowViewModel: INotifyPropertyChanged
 	{
-        # region Properties
-        private ObservableCollection<AccountModel> _debtors = new ObservableCollection<AccountModel>();
-        private string? _currentSaveFilepath = null; 
+        # region Properties & fields
+        
+        private string? _currentSaveFilepath = null;
+        private Brush _backgroundBrush = null;
 
+        public Brush BackgroundBrush
+        {
+            get => _backgroundBrush;
+            set
+            {
+                if (_backgroundBrush != value)
+                {
+                    _backgroundBrush = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        private ObservableCollection<AccountModel> _debtors = new ObservableCollection<AccountModel>();
         public ObservableCollection<AccountModel> Debtors
         {
             get
@@ -55,7 +71,7 @@ namespace SWD_GUI_assignment.ViewModel
             CurrentDebtor = Debtors[0];
         }
     
-        // Callback for AddDebtorViewModel add event
+        // Callback for AddDebtor dialog add event
         public void AddEventCallback(object sender, EventArgs args)
         {
             AddDebtorViewModel.AddEventArgs arguments = args as AddDebtorViewModel.AddEventArgs;
@@ -179,6 +195,24 @@ namespace SWD_GUI_assignment.ViewModel
             }
         }
 
+        private ICommand _commandChangeBackgroundColor;
+
+        public ICommand CommandChangeBackgroundColor
+        {
+            get
+            {
+                return _commandChangeBackgroundColor ??
+                       (_commandChangeBackgroundColor = new RelayCommand<object>((object brush) =>
+                       {
+                           OnChangeColor(brush);
+                       }));
+            }
+        }
+
+        private void OnChangeColor(object brush)
+        {
+            BackgroundBrush = brush as Brush;
+        }
         private void OnSave()
         {
             string debtBookToSave = new string("");

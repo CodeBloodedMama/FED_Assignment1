@@ -45,5 +45,11 @@ namespace SWD_GUI_assignment
         {
             lbxDebtors.Items.Refresh();
         }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            object brush = Application.Current.TryFindResource("GradientBrushChromium");
+            Background = brush as Brush;
+        }
     }
 }

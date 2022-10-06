@@ -94,6 +94,7 @@ namespace SWD_GUI_assignment.ViewModel
             : this(execute, null)
         {
         }
+        
 
         /// <summary>
         /// Creates a new command.
@@ -108,6 +109,7 @@ namespace SWD_GUI_assignment.ViewModel
             _execute = execute;
             _canExecute = canExecute;
         }
+
 
         #endregion // Constructors
 
@@ -135,7 +137,14 @@ namespace SWD_GUI_assignment.ViewModel
 
         public void Execute(object parameter)
         {
-            _execute();
+            if (parameter != null)
+            {
+                _executeWParam(parameter);
+            }
+            else
+            {
+                _execute();
+            }
         }
 
         #endregion // ICommand Members
@@ -143,6 +152,7 @@ namespace SWD_GUI_assignment.ViewModel
         #region Fields
 
         readonly Action _execute;
+        private readonly Action<object> _executeWParam;
         readonly Func<bool> _canExecute;
 
         #endregion // Fields
