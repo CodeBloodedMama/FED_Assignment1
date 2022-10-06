@@ -1,7 +1,0 @@
-C:\AuProjects\Semester 4\FrontEnd\HandIn_1_thedebtbook\SWD_Updated\The Debt Book\WpfApp1\obj\Debug\net6.0-windows\WpfApp1.csproj.AssemblyReference.cache
-C:\AuProjects\Semester 4\FrontEnd\HandIn_1_thedebtbook\SWD_Updated\The Debt Book\WpfApp1\obj\Debug\net6.0-windows\View\AddDebtor.g.cs
-C:\AuProjects\Semester 4\FrontEnd\HandIn_1_thedebtbook\SWD_Updated\The Debt Book\WpfApp1\obj\Debug\net6.0-windows\View\DebtorOverview.g.cs
-C:\AuProjects\Semester 4\FrontEnd\HandIn_1_thedebtbook\SWD_Updated\The Debt Book\WpfApp1\obj\Debug\net6.0-windows\View\MainWindow.g.cs
-C:\AuProjects\Semester 4\FrontEnd\HandIn_1_thedebtbook\SWD_Updated\The Debt Book\WpfApp1\obj\Debug\net6.0-windows\App.g.cs
-C:\AuProjects\Semester 4\FrontEnd\HandIn_1_thedebtbook\SWD_Updated\The Debt Book\WpfApp1\obj\Debug\net6.0-windows\WpfApp1_MarkupCompile.cache
-C:\AuProjects\Semester 4\FrontEnd\HandIn_1_thedebtbook\SWD_Updated\The Debt Book\WpfApp1\obj\Debug\net6.0-windows\WpfApp1_MarkupCompile.lref
