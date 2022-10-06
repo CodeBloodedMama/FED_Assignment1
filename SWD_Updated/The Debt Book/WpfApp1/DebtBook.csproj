@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\Add-002.png" />
+    <None Remove="Resources\Images\ArrowLeft_001.png" />
+    <None Remove="Resources\Images\ArrowRight_001.png" />
+    <None Remove="Resources\Images\Delete-001.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\Add-002.png" />
+    <Resource Include="Resources\Images\ArrowLeft_001.png" />
+    <Resource Include="Resources\Images\ArrowRight_001.png" />
+    <Resource Include="Resources\Images\Delete-001.png" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,10 +14,15 @@ namespace SWD_GUI_assignment.ViewModel
 {
     public class AddDebtorViewModel: INotifyPropertyChanged
     {
-        private AccountCollection _accs;
+        private ObservableCollection<AccountModel> _accs;
 
-        public AddDebtorViewModel(ref AccountCollection accs)
+        public AddDebtorViewModel(ref ObservableCollection<AccountModel> accs, EventHandler callback)
         {
+            if (callback == null)
+            {
+                throw new ArgumentNullException("EventHandler callback");
+            }
+            _addDebtorClicked += callback;
             _accs = accs;
         }
 
@@ -28,38 +34,53 @@ namespace SWD_GUI_assignment.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        AccountModel AccountModel=new AccountModel(null);
+        AccountModel _accountModel=new AccountModel(null);
 
         public String Name
         {
-            get => AccountModel.Name;
+            get => _accountModel.Name;
             set
             {
-                if (value != AccountModel.Name)
+                if (value != _accountModel.Name)
                 {
-                    AccountModel.Name = value;
+                    _accountModel.Name = value;
                     OnPropertyChanged();
                 }
             }
         }
         public double Balance
         {
-            get => AccountModel.Balance;
+            get => _accountModel.Balance;
             set
             {
-                if (value != AccountModel.Balance)
+                if (value != _accountModel.Balance)
                 {
-                    AccountModel.ChangeBalance(value);
+                    _accountModel.ChangeBalance(value);
                     OnPropertyChanged();
                 }
             }
         }
 
-        public void AddDebter_OnClick()
+        public class AddEventArgs : EventArgs
         {
-            if (AccountModel != null)
+            private AccountModel _modelToAdd;
+
+            public AccountModel ModelToAdd
             {
-                _accs.AddNewDebter(AccountModel);
+                get => _modelToAdd;
+                set => _modelToAdd = value;
+            }
+        }
+
+        private event EventHandler _addDebtorClicked ;
+
+        public void AddDebtor_OnClick()
+        {
+            if (_accountModel != null)
+            {
+                AddEventArgs args = new AddEventArgs();
+                args.ModelToAdd = _accountModel;
+                _addDebtorClicked.Invoke(this, args);
             }
         }
 
@@ -76,7 +97,7 @@ namespace SWD_GUI_assignment.ViewModel
         
             get
             {
-                return _AddDebtorCommand ?? (_AddDebtorCommand = new RelayCommand(AddDebter_OnClick));
+                return _AddDebtorCommand ?? (_AddDebtorCommand = new RelayCommand(AddDebtor_OnClick));
             }
         
         }
@@ -85,12 +106,10 @@ namespace SWD_GUI_assignment.ViewModel
 
         public ICommand CloseCommand
         {
-
             get
             {
                 return _CloseCommand ?? (_CloseCommand = new RelayCommand(CloseApplication_OnClick));
             }
-
         }
 
 
