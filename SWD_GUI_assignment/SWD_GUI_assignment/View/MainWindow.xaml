@@ -5,17 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SWD_GUI_assignment"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="350" Width="400"
         Window.MouseEnter="MainWindow_OnGotFocus">
 
-    <Grid>
+
+    <!--Resources go here-->
+    <Window.Resources>
+        <LinearGradientBrush x:Key="GradientBrushGreen" StartPoint="0,0" EndPoint="0.8, 0.8">
+            <GradientStop Color="DarkSlateGray" Offset="0.0"/>
+            <GradientStop Color="ForestGreen" Offset="0.4"/>
+            <GradientStop Color="LightGreen"  Offset="8.0"/>
+            <GradientStop Color="PaleGreen"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="GradientBrushChromium" StartPoint="0,0" EndPoint="0.8, 0.8">
+            <GradientStop Color="Gainsboro" Offset="0.0"/>
+            <GradientStop Color="AliceBlue" Offset="0.6"/>
+            <GradientStop Color="Gainsboro"  Offset="1.1"/>
+        </LinearGradientBrush>
+
+        <!-- Style definitions -->
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value ="16"></Setter>
+            <Setter Property="Margin" Value="0, 15"></Setter>
+            <Setter Property="FontFamily" Value="Georgia"></Setter>
+
+        </Style>
+        <Style x:Key="ToolboxButtons"  TargetType="Button">
+            <Setter Property="Control.FontWeight" Value="ExtraBlack"/>
+            <Setter Property="FontFamily" Value="Georgia"/>
+            <Style.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="True">
+                    <!--Changing the button highlight is not possible from style
+                        Default control template has to be changed.
+                        See: https://docs.telerik.com/devtools/wpf/controls/radbuttons/styles-and-templates/styling-the-radbutton
+                        -->
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect ShadowDepth="1"></DropShadowEffect>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Control.FontWeight" Value="DemiBold"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value ="Gray"></Setter>
+            <Setter Property="FontFamily" Value="Cambria"></Setter>
+        </Style>
+        
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Palatino Linotype"></Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource GradientBrushChromium}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="0.6*" />
         </Grid.ColumnDefinitions>
-        <StackPanel>
-            <Label>Debtors</Label>
-            <ListBox ItemsSource="{Binding Path=Debtors}" 
+        <StackPanel Grid.ColumnSpan="2">
+            <Label HorizontalAlignment="Center" Grid.ColumnSpan="2" FontWeight="DemiBold" Margin =" 0, 10">List of Debtors</Label>
+            <ListBox ItemsSource="{Binding Path=Debtors}"
+                     
                      SelectedItem="{Binding Path=CurrentDebtor}"
                      IsSynchronizedWithCurrentItem="True"
                      DisplayMemberPath="Information" 
@@ -24,27 +80,30 @@
                      Margin="9"/>
                       
             
-            <WrapPanel>
-            <Button Height="23" Margin="10,10,10,10" 
-                    VerticalAlignment="Top" HorizontalAlignment="Left"
-                    Name="btnBack" Content="&lt;" Width="75"
-                    Click="BtnBack_OnClick"
-            />
-            <Button Height="23" Margin="10,10,10,10" 
-                    VerticalAlignment="Top" HorizontalAlignment="Left"
-                    Name="btnOverView" Width="75"
+            <WrapPanel VerticalAlignment="Center">
+                <Button Background="Bisque" Height="30" Margin="10,15" 
+                    VerticalAlignment="Top" HorizontalAlignment="Center"
+                    Name="btnBack"  Width="75"
+                    Click="BtnBack_OnClick">
+                    <Image Source="/Resources/Images/ArrowLeft_001.png"/>
+                </Button>
+
+                <Button Height="40" Width="80" Margin="15,10,15,10" 
+                    VerticalAlignment="Top" HorizontalAlignment="Center"
+                    Name="btnOverView" 
                     Command="{Binding OpenOverviewCommand}"
                     >Overview
             </Button>
-                <Button Height="23" Margin="10" 
-                    VerticalAlignment="Top" HorizontalAlignment="Left"
-                    Name="btnForward"  Width="75"
-                    Content="&gt;" 
-                    Click="BtnForward_OnClick"
-            />
+                <Button Background="Bisque" Margin="0, 15" Height="30" 
+                        VerticalAlignment="Top" HorizontalAlignment="Center"
+                        Name="btnForward"  Width="80"
+                        Click="BtnForward_OnClick">
+                <Image Source="/Resources/Images/ArrowRight_001.png"/>
+            </Button>
+            
             </WrapPanel>
         </StackPanel>
-        <Button Grid.Column="1" Height="23" Margin="10,20,10,10" VerticalAlignment="Top" HorizontalAlignment="Left"
+        <Button Grid.Column="2" Height="23" Margin="10,20,10,10" VerticalAlignment="Center" HorizontalAlignment="Center"
                 Width="75" Name="BtnAddDeb" Command="{Binding OpenAddDebtorCommand}">Add Debtor</Button>
     </Grid>
 </Window>
