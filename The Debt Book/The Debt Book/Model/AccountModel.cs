@@ -6,6 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//Software Technology DiplomaEngineering
+//4th Semester @Aarhus Universitet
+//Front End Development
+//Code and program developed by :
+//    Szymanek, Marcin
+//           and
+//    Lennert, Elisabeth
+//Debt Book program using MVVM desingn pattern
+
 namespace SWD_GUI_assignment.Model
 {
     // Each debtor has an account. Balance list shows all transactions (debts taken or paid)
